@@ -11,6 +11,7 @@ import LoopKit
 import LoopUI
 import ShareClient
 import CGMBLEKit
+import UserNotifications
 
 
 class DexCGMManager: CGMManager {
@@ -238,6 +239,21 @@ final class G5CGMManager: DexCGMManager, TransmitterDelegate {
     }
 
     func transmitter(_ transmitter: Transmitter, didReadBackfill glucose: [Glucose]) {
+        let notification = UNMutableNotificationContent()
+
+        notification.title = "New Backfill Data"
+        notification.body = "Please capture logs now"
+        notification.sound = UNNotificationSound.default()
+
+        let request = UNNotificationRequest(
+            // Not a typo: this should replace any pump reservoir low notifications
+            identifier: "Backfill",
+            content: notification,
+            trigger: nil
+        )
+
+        UNUserNotificationCenter.current().add(request)
+
         let samples = glucose.compactMap { (glucose) -> NewGlucoseSample? in
             guard glucose != latestReading, glucose.state.hasReliableGlucose, let quantity = glucose.glucose else {
                 return nil
