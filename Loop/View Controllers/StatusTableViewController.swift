@@ -45,7 +45,7 @@ final class StatusTableViewController: ChartsTableViewController {
                     case .none, .bolus?:
                         self?.refreshContext.formUnion([.status, .insulin])
                     case .preferences?:
-                        self?.refreshContext.formUnion([.status, .targets])
+                        self?.refreshContext.formUnion([.status, .targets, .insulin, .carbs])
                     case .carbs?:
                         self?.refreshContext.update(with: .carbs)
                     case .glucose?:

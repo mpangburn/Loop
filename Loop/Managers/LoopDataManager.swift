@@ -979,7 +979,8 @@ extension LoopDataManager {
                 let earliestEffectDate = Date(timeIntervalSinceNow: .hours(-24))
                 let nextEffectDate = insulinCounteractionEffects.last?.endDate ?? earliestEffectDate
                 let bolusEffect = [potentialBolus]
-                    .glucoseEffects(insulinModel: model, insulinSensitivity: sensitivity)
+                    // FIXME: correct variable timeline?
+                    .glucoseEffects(insulinModel: VariableInsulinModel(base: model, variableEffectTimeline: overrideHistory.variableInsulinEffectTimeline(relativeTo: DateInterval(start: now, duration: 0))), insulinSensitivity: sensitivity)
                     .filterDateRange(nextEffectDate, nil)
                 effects.append(bolusEffect)
             }
