@@ -1096,7 +1096,7 @@ final class StatusTableViewController: ChartsTableViewController {
             if deviceManager.loopManager.settings.futureOverrideEnabled() {
                 vc.scheduledOverride = deviceManager.loopManager.settings.scheduleOverride
             }
-            vc.presets = deviceManager.loopManager.settings.overridePresets
+            vc.setPresets(deviceManager.loopManager.settings.overridePresets)
             vc.glucoseUnit = statusCharts.glucose.glucoseUnit
             vc.delegate = self
         case let vc as PredictionTableViewController:
